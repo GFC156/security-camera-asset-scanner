@@ -1,0 +1,24 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# IDE / 编辑器临时文件
+.electron-cache/
+.vscode/
+.idea/
+*.swp
+metadata.json
+
+# 设计稿和临时文件
+ui-mockups*.html
+启动.txt
+gemini-code-*.py
+
+# 操作系统
+Thumbs.db
+desktop.ini
