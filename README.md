@@ -48,14 +48,13 @@ For each discovered device, automatically retrieves:
 
 ### How to Use
 
-#### Option 1: Download the exe (Recommended for end users)
+#### Option 1: Download the zip (Recommended for end users)
 
-Download the latest release from [Releases](../../releases):
+Download the latest archive from [Releases](../../releases):
 
 | File | Description | Size |
 |---|---|---|
-| `SecurityCameraScanner Setup 0.0.0.exe` | NSIS installer | ~160 MB |
-| `SecurityCameraScanner 0.0.0.exe` | Portable, no install needed | ~160 MB |
+| `v1.0.0.Windows.zip` | Portable, extract and double-click the `.exe` to run | ~220 MB |
 
 **First launch takes 5-10 seconds** to initialize the embedded Express server, showing a dark loading page before entering the main UI.
 
@@ -319,14 +318,13 @@ MIT
 
 ### 如何使用
 
-#### 方式一:下载 exe 直接运行(推荐普通用户)
+#### 方式一:下载压缩包直接运行(推荐普通用户)
 
-从 [GitHub Releases](../../releases) 下载最新的 exe:
+从 [GitHub Releases](../../releases) 下载最新的压缩包:
 
 | 文件 | 说明 | 大小 |
 |---|---|---|
-| `安防监控扫描 Setup 0.0.0.exe` | NSIS 安装版,双击安装后从开始菜单启动 | ~160 MB |
-| `安防监控扫描 0.0.0.exe` | 免安装版,双击即可运行 | ~160 MB |
+| `v1.0.0.Windows.zip` | 免安装版,解压后双击 `.exe` 即可运行 | ~220 MB |
 
 **首次启动可能需要 5-10 秒**(内嵌 Express 服务初始化),会显示深色 loading 页面,然后自动进入主界面。
 
