@@ -2,6 +2,8 @@
 
 一款 Windows 桌面工具,用于**自动发现局域网内的海康/大华及兼容 ISAPI 协议的监控设备**,并采集设备资产信息、平台接入状态、网络质量等。打包成单个 `.exe`,无需安装依赖,双击即可运行。
 
+![license](https://img.shields.io/badge/license-MIT-blue) ![platform](https://img.shields.io/badge/platform-Windows-green) ![electron](https://img.shields.io/badge/Electron-26-blue)
+
 ---
 
 ## 功能介绍
@@ -25,34 +27,34 @@
 - **EHome / ISUP**:版本号、服务器地址、注册状态
 - **萤石云**:接入状态
 
-### 4. 网络质量 MOS 评分 (主动测试)
+### 4. 网络质量 MOS 评分(主动测试)
 - 扫描完成后,每台设备可独立点击 **测速** 按钮
 - 8 次 HTTP 探测,测量延迟、抖动、丢包率
 - 基于 ITU-T G.107 E-Model 计算 MOS 综合评分 (1.0-4.5)
 - 评级 A/B/C/D/F,直观判断监控链路质量
 - **不影响扫描速率**:扫描时不会自动测,完全用户主动触发
 
-### 5. AI 安全审计 (可选)
-- 配置 `GEMINI_API_KEY` 后,可对扫描结果做 AI 安全风险诊断
-- 输出安全评分、漏洞列表、合规检查、修复建议
-
-### 6. 数据导出
+### 5. 数据导出
 - 一键导出 CSV(Excel 可直接打开)
 
 ---
 
 ## 如何使用
 
-### 第一步:下载运行
+### 方式一:下载 exe 直接运行(推荐普通用户)
 
-从 GitHub Releases 下载最新的 exe:
+从 [GitHub Releases](../../releases) 下载最新的 exe:
 
-- **`安防监控扫描 Setup 0.0.0.exe`** — NSIS 安装版,双击安装后从开始菜单启动
-- **`安防监控扫描 0.0.0.exe`** — 免安装版,双击即可运行(推荐)
+| 文件 | 说明 | 大小 |
+|---|---|---|
+| `安防监控扫描 Setup 0.0.0.exe` | NSIS 安装版,双击安装后从开始菜单启动 | ~160 MB |
+| `安防监控扫描 0.0.0.exe` | 免安装版,双击即可运行 | ~160 MB |
 
-> 第一次启动可能需要 5-10 秒(内嵌 Express 服务初始化),显示深色 loading 页面。
+**首次启动可能需要 5-10 秒**(内嵌 Express 服务初始化),会显示深色 loading 页面,然后自动进入主界面。
 
-### 第二步:配置扫描参数
+#### 操作步骤
+
+**1. 配置扫描参数**
 
 启动后顶部一行工具栏:
 
@@ -68,14 +70,14 @@
 - 并发线程数(默认 20)
 - 超时时间(默认 2000ms)
 
-### 第三步:开始扫描
+**2. 开始扫描**
 
 1. 填好参数,点击 **开始** 按钮
 2. 按钮旁实时显示进度百分比(如 `42%`)
 3. 顶部右侧显示 `发现 X | 进度 X/Y | 用时 Ns`
 4. 扫描过程中设备会逐条出现在表格里
 
-### 第四步:查看结果
+**3. 查看结果**
 
 表格列说明:
 
@@ -97,25 +99,29 @@
 - **平台协议配置** — GB28181 / EHome / 萤石云 的详细接入参数
 - **RAW ISAPI XML** — 原始 ISAPI 响应 XML(调试用)
 
-### 第五步:测试网络质量
+**4. 测试网络质量**
 
 1. 扫描完成后,在表格里找到要测的设备
 2. 点击行末 **[测速]** 按钮
 3. 按钮变为 **测试中**(spinner 动画)
 4. 8 次探测完成后(约 2-5 秒),按钮旁出现彩色 MOS badge:
-   - `MOS 4.2 · A` (深绿) — 优秀
-   - `MOS 3.6 · B` (浅绿) — 良好
-   - `MOS 3.1 · C` (黄色) — 一般
-   - `MOS 2.5 · D` (橙色) — 较差
-   - `MOS 1.2 · F` (红色) — 极差
-5. 鼠标悬停 badge 查看详细指标
+
+| Badge | MOS | 评级 | 含义 |
+|---|---|---|---|
+| 深绿 | 4.0+ | A | 优秀 |
+| 浅绿 | 3.5+ | B | 良好 |
+| 黄色 | 3.0+ | C | 一般 |
+| 橙色 | 2.0+ | D | 较差 |
+| 红色 | <2.0 | F | 极差 |
+
+5. 鼠标悬停 badge 查看详细指标 tooltip
 6. 点击设备行 → 网络质量 Tab 查看完整详情
 
-### 第六步:导出数据
+**5. 导出数据**
 
 点击顶部 **CSV** 按钮,导出当前所有扫描结果为 CSV 文件,可直接用 Excel 打开。
 
-### 第七步:查看日志(排查问题)
+**6. 查看日志(排查问题)**
 
 如果扫不到设备,从应用菜单查看日志:
 - **工具 → 打开日志文件** — 用记事本打开 `server.log`
@@ -124,9 +130,56 @@
 日志位置:`%APPDATA%\security-camera-asset-scanner\server.log`
 
 日志会显示每个 IP 的探测结果:
-- `[scan] HIT 192.168.1.10 → 设备名 (型号)` — 命中设备
-- `[scan] ERR 192.168.1.50 -> connect ETIMEDOUT` — 该 IP 探测失败原因
-- `[quality] done ip=192.168.1.10 mos=4.2 ...` — 质量测试结果
+```
+[scan] start: total=254 user=admin timeout=2000ms attempts=3 threads=20
+[scan] HIT  192.168.1.10 → IPCam (DS-2CD4024P)
+[scan] ERR  192.168.1.50 -> connect ETIMEDOUT
+[scan] finished: total=254 hit=12 err=0
+[quality] done ip=192.168.1.10 mos=4.2 grade=A latency=35ms jitter=4ms loss=0%
+```
+
+---
+
+### 方式二:从源码构建(推荐开发者)
+
+#### 环境要求
+- Node.js 18+
+- npm 9+
+- Windows 10/11(打包目标平台)
+
+#### 步骤
+
+```bash
+# 1. 克隆仓库
+git clone https://github.com/你的用户名/security-camera-asset-scanner.git
+cd security-camera-asset-scanner
+
+# 2. 安装依赖
+npm install
+
+# 3. (可选)配置 AI 安全审计
+cp .env.example .env
+# 编辑 .env 填入 GEMINI_API_KEY
+
+# 4. 开发模式运行(带热重载)
+npm run dev
+
+# 5. 打包成 exe
+npm run electron:build
+# 产物在 dist/ 目录:
+#   - 安防监控扫描 Setup 0.0.0.exe (NSIS 安装版)
+#   - 安防监控扫描 0.0.0.exe (免安装版)
+```
+
+#### 可用 npm 脚本
+
+| 命令 | 作用 |
+|---|---|
+| `npm run dev` | 启动开发服务器(端口 3000) |
+| `npm run build` | 构建前端 + 后端到 `dist/` |
+| `npm run lint` | TypeScript 类型检查 |
+| `npm run electron:build` | 打包成 Windows exe |
+| `npm start` | 启动打包后的 server |
 
 ---
 
@@ -150,11 +203,11 @@
 ### Q3. AI 安全审计功能用不了?
 
 AI 审计需要配置 `GEMINI_API_KEY` 环境变量:
-1. 在程序所在目录创建 `.env` 文件
-2. 写入:`GEMINI_API_KEY=你的API密钥`
+1. 复制 `.env.example` 为 `.env`
+2. 填入你的 Gemini API Key(申请地址:https://aistudio.google.com/apikey)
 3. 重启应用
 
-未配置不影响其他功能。
+未配置不影响其他功能(扫描、MOS 测速、CSV 导出等都可用)。
 
 ### Q4. MOS 评分准确吗?
 
@@ -162,6 +215,12 @@ AI 审计需要配置 `GEMINI_API_KEY` 环境变量:
 - 不包含视频流质量评估(码率、分辨率、卡顿)
 - 适合快速判断"哪台监控网络有问题",作为运维参考
 - 想测视频流质量,请使用专业工具(如海康 iVMS)
+
+### Q5. 为什么会弹出多个窗口?
+
+旧版本有此 Bug,新版已通过 `app.requestSingleInstanceLock()` + `ELECTRON_RUN_AS_NODE` 修复。如仍遇到,请:
+1. 任务管理器结束所有 `安防监控扫描.exe` 进程
+2. 下载最新版本
 
 ---
 
@@ -186,33 +245,36 @@ AI 审计需要配置 `GEMINI_API_KEY` 环境变量:
 - 故障排查 — MOS 评分快速定位网络质量差的设备
 - 资产盘点 — 导出 CSV 做资产台账
 
-## 开发者
+## 项目结构
 
-源码结构:
 ```
 security-camera-asset-scanner/
-├── electron/main.cjs          # Electron 主进程
-├── server.ts                  # Express 后端 + ISAPI 扫描逻辑
+├── electron/
+│   └── main.cjs                 # Electron 主进程(窗口管理 + 子进程启动)
 ├── src/
-│   ├── App.tsx                # 主应用
 │   ├── components/
-│   │   ├── Header.tsx         # 顶部工具栏
-│   │   ├── StatsOverview.tsx  # 协议过滤器
-│   │   ├── AssetTable.tsx     # 设备表格 + MOS badge
-│   │   └── DeviceDetailModal.tsx # 设备详情弹窗
+│   │   ├── AiSecurityAuditModal.tsx  # AI 审计弹窗
+│   │   ├── AssetTable.tsx       # 设备表格 + MOS badge
+│   │   ├── DeviceDetailModal.tsx # 设备详情弹窗(4 Tab)
+│   │   ├── Header.tsx           # 顶部工具栏(单行融合)
+│   │   ├── ProgressBanner.tsx   # 状态行(保留组件,已合并)
+│   │   └── StatsOverview.tsx    # 协议过滤器 chip 行
 │   ├── utils/
-│   │   ├── platformUtils.ts   # 协议信息统一解析
-│   │   ├── ipUtils.ts         # IP/CIDR 解析
-│   │   └── exporter.ts        # CSV 导出
-│   └── types.ts               # TypeScript 类型定义
-└── package.json
-```
-
-本地开发:
-```bash
-npm install
-npm run dev      # 启动开发服务器
-npm run electron:build  # 打包成 exe
+│   │   ├── exporter.ts          # CSV 导出
+│   │   ├── ipUtils.ts           # IP/CIDR 解析
+│   │   └── platformUtils.ts    # 协议信息统一解析(GB28181/EHome/萤石云)
+│   ├── App.tsx                  # 主应用入口
+│   ├── main.tsx                 # React 渲染入口
+│   ├── index.css                # Tailwind 全局样式
+│   └── types.ts                 # TypeScript 类型定义
+├── server.ts                    # Express 后端(ISAPI 扫描 + MOS 测速 + AI 审计)
+├── index.html                   # HTML 入口
+├── vite.config.ts               # Vite 配置
+├── tsconfig.json                # TypeScript 配置
+├── package.json                 # 项目依赖和脚本
+├── .env.example                 # 环境变量模板
+├── .gitignore
+└── README.md
 ```
 
 ## License
